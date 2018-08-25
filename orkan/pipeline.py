@@ -1,8 +1,13 @@
 from multiprocessing import cpu_count
-from multiprocessing.queues import SimpleQueue
 from concurrent.futures import ProcessPoolExecutor
 import traceback
 
+import sys
+
+if sys.version < "3":
+	import multiprocessing.queues import SimpleQueue
+else
+	import multiprocessing import SimpleQueue
 
 VERBOSE = False
 verbose_output = SimpleQueue()
@@ -11,7 +16,7 @@ verbose_output = SimpleQueue()
 def _log(msg):
     if VERBOSE:
         verbose_output.put(msg)
-        print msg
+        print(msg);
 
 signals = SimpleQueue()  # Queue of signals for the manager
 queues = []
@@ -180,6 +185,6 @@ class Pipeline(object):
         if VERBOSE:
             _log("Compiling results...")
             verbose_output.put(sentinel)
-            print "--------------------"
+            print("--------------------");
             for n in iter(verbose_output.get, sentinel):
-                print n
+                print(n);
